@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jooleeshaa - Real-time Safety Alerts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Basic Reset & Typography */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f7fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        h1 { font-size: 3em; margin-bottom: 0.5em; }
+        h2 { font-size: 2.5em; margin-bottom: 1em; text-align: center; }
+        h3 { font-size: 1.8em; margin-bottom: 0.6em; }
+
+        p {
+            font-size: 1.1em;
+            margin-bottom: 1em;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(to right, #4CAF50, #8BC34A); /* Green gradient */
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: rotate 15s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-section .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section .tagline {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-top: -10px;
+        }
+
+        .hero-section .description {
+            max-width: 700px;
+            margin: 20px auto 40px auto;
+        }
+
+        /* CTA Buttons */
+        .cta-buttons {
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .btn-primary, .btn-secondary {
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: #FF5722; /* Vibrant Orange */
+            color: white;
+            border: none;
+            margin-right: 15px;
+        }
+
+        .btn-primary:hover {
+            background-color: #E64A19;
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Alert Display Grid - No color classes as requested, using direct colors/styles */
+        .alert-display-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 60px;
+            padding: 0 20px;
+        }
+
+        .alert-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            color: #333;
+            transition: transform 0.2s ease;
+        }
+
+        .alert-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .alert-card h3 {
+            margin-top: 0;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .alert-card p {
+            font-size: 1em;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+
+        .alert-card span {
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        /* Direct Color Application */
+        .alert-red {
+            border-left: 8px solid #FF0000; /* Red */
+        }
+        .alert-red h3 { color: #FF0000; }
+        .alert-red span { color: #8B0000; } /* Darker Red */
+
+
+        .alert-amber {
+            border-left: 8px solid #FFA500; /* Amber/Orange */
+        }
+        .alert-amber h3 { color: #FFA500; }
+        .alert-amber span { color: #FF8C00; } /* Darker Amber */
+
+
+        .alert-green {
+            border-left: 8px solid #008000; /* Green */
+        }
+        .alert-green h3 { color: #008000; }
+        .alert-green span { color: #006400; } /* Darker Green */
+
+
+        /* Features Section */
+        .features-section {
+            padding: 80px 0;
+            background-color: #ffffff;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            background-color: #f9f9f9;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-item h3 {
+            color: #4CAF50; /* Green */
+            margin-bottom: 15px;
+        }
+
+        /* Call to Action Section */
+        .call-to-action {
+            background: linear-gradient(to left, #2980b9, #3498db); /* Blue gradient */
+            color: white;
+            padding: 70px 0;
+            text-align: center;
+        }
+
+        .call-to-action h2 {
+            color: white;
+            font-size: 2.8em;
+        }
+
+        .call-to-action p {
+            max-width: 600px;
+            margin: 20px auto 40px auto;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        .footer-links a {
+            color: #ecf0f1;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #4CAF50; /* Green */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5em; }
+            h2 { font-size: 2em; }
+            .hero-section { padding: 60px 0; }
+            .btn-primary, .btn-secondary {
+                display: block;
+                margin: 15px auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2em; }
+            .hero-section .tagline { font-size: 1.2em; }
+            .alert-display-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero-section">
+        <div class="container">
+            <h1>Jooleeshaa</h1>
+            <p class="tagline">Your real-time safety companion for Nairobi and beyond.</p>
+            <p class="description">Get instant alerts on demonstrations, accidents, and traffic snarls, helping you navigate safely.</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn-primary">Download on App Store</a>
+                <a href="#" class="btn-secondary">Get on Google Play</a>
+            </div>
+            <div class="alert-display-grid">
+                <div class="alert-card alert-red">
+                    <h3>Critical Alert!</h3>
+                    <p>Major Demonstration - Uhuru Highway Blocked (CBD)</p>
+                    <span>Active Now</span>
+                </div>
+                <div class="alert-card alert-amber">
+                    <h3>Caution Alert!</h3>
+                    <p>Traffic Snarl - Waiyaki Way near ABC Place</p>
+                    <span>Slow Moving</span>
+                </div>
+                <div class="alert-card alert-green">
+                    <h3>All Clear!</h3>
+                    <p>Mombasa Road - Traffic Flowing Normally</p>
+                    <span>Resolved</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="features-section">
+        <div class="container">
+            <h2>How Jooleeshaa Works</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3>Report Incidents</h3>
+                    <p>Easily report accidents, demos, or traffic jams directly from your location.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Get Real-time Alerts</h3>
+                    <p>Receive instant push notifications for incidents near you, color-coded for severity.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Interactive Map</h3>
+                    <p>Visualize "hot zones" and traffic snarls on an integrated map, powered by Google Maps.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Community Insights</h3>
+                    <p>Check comments from other users and share your own updates for shared safety.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="call-to-action">
+        <div class="container">
+            <h2>Stay Safe, Stay Informed.</h2>
+            <p>Don't let unexpected incidents disrupt your day. Download Jooleeshaa today!</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn-primary">Download Now</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Jooleeshaa. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // This script file is mostly a placeholder for a simple landing page.
+        // In a full application, this would contain logic for
+        // interactive elements, API calls, real-time updates, etc.
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Jooleeshaa landing page loaded.');
+            // You could add animations or dynamic content here if needed.
+        });
+    </script>
+</body>
+</html>
