@@ -1,0 +1,15 @@
+build notes
+
+vite
+
+ npm create vite@latest my-local-pulse-app -- --template react-ts
+
+cd my-local-pulse-app
+
+npm install
+
+
+
+
+
+ocal development server: You can use tools like ngrok or Localtunnel. 
